@@ -12,7 +12,7 @@ use esp_idf_hal::{
     delay,
     gpio::*,
     peripherals::Peripherals,
-    spi::{config::DriverConfig, config::MODE_3, Dma, SpiConfig, SpiDeviceDriver},
+    spi::{config::DriverConfig, Dma, SpiConfig, SpiDeviceDriver},
     units::FromValueType, // for converting 26MHz to value
 };
 

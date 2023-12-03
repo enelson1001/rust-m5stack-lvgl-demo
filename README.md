@@ -9,7 +9,6 @@ M5Stack Basic Development Kit V1.0 with 16M Flash
 This application shows how to use lv-binding-rust crate on the M5Stack.  The program displays a clock time on a blue backgound screen.
 The clock time is a simulated time of 21:00 to 21::59 where the seconds are incremented each second and repeats the 00-59 seconds forever.
 
-
 ## partition-table folder
 The partition-table folder contains a file called partitons.csv.  This file increases the default factory/app partiton from the default of 1M to 3M.  
 This allows us more space for our program and since the flash size is 16M this should not be a problem.  This file will be called when we flash the device.
@@ -88,26 +87,11 @@ CROSS_COMPILE = "xtensa-esp32-elf"
 LVGL_FONTS_DIR = {relative = true, value = "custom-fonts"}
 ```
 
-## lv-binding-rust clone
-I cloned the lv-binding-rust repository and made the following changes to lv_binding_rust/lvgl-sys/build.rs
-
-```
-Comment out line 56
-//let link_extra = env::var("LVGL_LINK").unwrap_or("SDL2".to_string());
-
-
-Comment out lines 240-244
-/*    #[cfg(feature = "drivers")]
-    link_extra.split(',').for_each(|a| {
-        println!("cargo:rustc-link-lib={a}");
-        //println!("cargo:rustc-link-search=")
-    });  */ 
-
-```
-There is a PR proposed (PR #153 by madwizard-thomas) that improves on the above impementation but as of this writing it hasn't been approved.
+## lv-binding-rust forked
+I updated my fork of lv-binding-rust to include PR153 ie the changes recommended by madwizard-thomas.
 
 ## Building th project
-The changes to config.toml, Cargo.toml and to build.rs allowed me to build lv-binding-rust without any errors. I do get 2 warnings about va_list not being FFI-safe.
+I do get 2 warnings about va_list not being FFI-safe (twice) but the app runs without any errors.
 
 
 ## Flashing the M5Stack
