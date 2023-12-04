@@ -16,12 +16,10 @@ use esp_idf_hal::{
     units::FromValueType, // for converting 26MHz to value
 };
 
-use lvgl;
 use lvgl::font::Font;
 use lvgl::style::Style;
 use lvgl::widgets::Label;
 use lvgl::{Align, Color, Display, DrawBuffer, LvError, Part, TextAlign, Widget};
-use lvgl_sys;
 
 fn main() -> Result<(), LvError> {
     const HOR_RES: u32 = 320;
@@ -49,9 +47,7 @@ fn main() -> Result<(), LvError> {
         None::<AnyIOPin>,  // sdi
         Some(pins.gpio14), // cs
         &DriverConfig::new().dma(Dma::Channel1(4096)),
-        &SpiConfig::new()
-            .write_only(true)
-            .baudrate(26.MHz().into()),
+        &SpiConfig::new().write_only(true).baudrate(26.MHz().into()),
     )
     .unwrap();
 
@@ -115,7 +111,7 @@ fn main() -> Result<(), LvError> {
 
                 let val = CString::new(format!("21:{:02}", i)).unwrap();
                 time.set_text(&val).unwrap();
-                i = 1 + i;
+                i += 1;
 
                 lvgl::task_handler();
 
