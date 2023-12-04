@@ -10,8 +10,7 @@ This application shows how to use lv-binding-rust crate on the M5Stack.  The pro
 The clock time is a simulated time of 21:00 to 21::59 where the seconds are incremented each second and repeats the 00-59 seconds forever.
 
 ## partition-table folder
-The partition-table folder contains a file called partitons.csv.  This file increases the default factory/app partiton from the default of 1M to 3M.  
-This allows us more space for our program and since the flash size is 16M this should not be a problem.  This file will be called when we flash the device.
+The partition-table folder contains a file called partitons.csv.  This file increases the default factory/app partiton from the default of 1M to 3M.  This allows us more space for our program and since the flash size is 16M this should not be a problem.  This file will be called when we flash the device.
 
 ## custom-fonts folder
 The custom-fonts folder contains our custom fonts.  The customs fonts are converted from TTF fonts using lvgl online font converter at https://lvgl.io/tools/fontconverter.  I used https://ttfonts.net to find a font I liked and then downloaded the font.  In the lvgl-online-font-converter I used the font name plus the font size for the name of the font.  I chose Bpp of 2 bit-per-pixel and set the range of 0x30-0x3A since I only need numbers and the ":" character.  After clicking on "Convert" the file will be downloaded. I placed this downloaded file (*.c) into the custom-fonts folder.  Then I created a header file which has an extern to my *.c file, along with changing the ifndef and define names.  
@@ -29,25 +28,18 @@ esp-idf-sys = { version = "0.33.3" }
 cstr_core = "0.2.1"
 embedded-graphics-core = "0.4.0"
 
-lvgl = { version = "0.6.2", default-features = false, features = [
+lvgl = { git = "https://github.com/enelson1001/lv_binding_rust", version = "0.6.2", default-features = false, features = [
     "embedded_graphics",
     "unsafe_no_autoinit",
 ] }
 
-lvgl-sys = "0.6.2"
+lvgl-sys = { git = "https://github.com/enelson1001/lv_binding_rust", version = "0.6.2" }
+
 
 display-interface-spi = "0.4.1"
 mipidsi = "0.7.1"
 
 ```
-Link in your downloaded and modified lv-binding-rust repository.  Add the patch.crate.io section and lvgl, lvgl-codegen and lvgl-sys with the correct paths.
-```
-[patch.crates-io]
-lvgl = { path = "../../../lv-binding-rust/lv_binding_rust_patch_simple/lvgl" }
-lvgl-codegen = { path = "../../../lv-binding-rust/lv_binding_rust_patch_simple/lvgl-codegen" }
-lvgl-sys = { path = "../../../lv-binding-rust/lv_binding_rust_patch_simple/lvgl-sys" }
-```
-
 
 ## config.toml
 To get lv-bindings-rust to comple and build I made the following changes to the config.toml file. 
@@ -87,7 +79,7 @@ CROSS_COMPILE = "xtensa-esp32-elf"
 LVGL_FONTS_DIR = {relative = true, value = "custom-fonts"}
 ```
 
-## lv-binding-rust forked
+## lv-binding-rust fork
 I updated my fork of lv-binding-rust to include PR153 ie the changes recommended by madwizard-thomas.
 
 ## Building th project
