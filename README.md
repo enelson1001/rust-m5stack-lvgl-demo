@@ -39,7 +39,7 @@ display-interface-spi = "0.4.1"
 mipidsi = "0.7.1"
 
 ```
-I also included patch.crates-io section to patch esp-idf-sys, lvgl and lvgl-sys
+I also included patch.crates-io section to patch lvgl and lvgl-sys
 ```
 [patch.crates-io]
 lvgl = { git = "https://github.com/enelson1001/lv_binding_rust"}
