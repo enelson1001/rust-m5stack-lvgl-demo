@@ -22,22 +22,28 @@ The lvgl-configs folder holds the lv_config.h and lv_drv_conf.h files which are 
 ## Cargo.toml project file
 I added the following to the "dependencies" section.
 ```
-esp-idf-hal = { version = "0.42.1" }
-esp-idf-sys = { version = "0.33.3" }
+esp-idf-hal = { version = "0.42.5" }
+esp-idf-sys = { version = "0.33.7" }
 
 cstr_core = "0.2.1"
 embedded-graphics-core = "0.4.0"
 
-lvgl = { git = "https://github.com/enelson1001/lv_binding_rust", version = "0.6.2", default-features = false, features = [
+lvgl = { version = "0.6.2", default-features = false, features = [
     "embedded_graphics",
     "unsafe_no_autoinit",
 ] }
 
-lvgl-sys = { git = "https://github.com/enelson1001/lv_binding_rust", version = "0.6.2" }
-
+lvgl-sys = { version = "0.6.2" }
 
 display-interface-spi = "0.4.1"
 mipidsi = "0.7.1"
+
+```
+I also included patch.crates-io section to patch esp-idf-sys, lvgl and lvgl-sys
+```
+[patch.crates-io]
+lvgl = { git = "https://github.com/enelson1001/lv_binding_rust"}
+lvgl-sys = { git = "https://github.com/enelson1001/lv_binding_rust"}
 
 ```
 
@@ -82,10 +88,6 @@ LVGL_FONTS_DIR = {relative = true, value = "custom-fonts"}
 ## lv-binding-rust fork
 I updated my fork of lv-binding-rust to include PR153 ie the changes recommended by madwizard-thomas.
 
-## Building th project
-I do get 2 warnings about va_list not being FFI-safe (twice) but the app runs without any errors.
-
-
 ## Flashing the M5Stack
 I used the following command to flash the M5Stack.
 ```
@@ -94,7 +96,6 @@ $ cargo espflash flash --partition-table=partition-table/partitions.csv --monito
 
 ## Picture of M5stack running the demo
 ![demo](photos/demo.jpg)
-
 
 # Versions
 ### v1.0 : 
